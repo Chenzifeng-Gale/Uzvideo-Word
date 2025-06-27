@@ -1,0 +1,141 @@
+{
+  "vod": [
+    {
+      "name": "🐼「解」小猫咪",
+      "version": 2,
+      "remark": "配合网盘解析工具使用",
+      "webSite": "https://zy.xmm.hk/api.php/provide/vod",
+      "api": "https://11405.kstore.space/uz/wp/采集.js",
+      "type": 101
+    },
+     {
+      "name": "✈️TG搜",
+      "version": 6,
+      "remark": "格式 频道名称1@频道id1&频道名称2@频道id2",
+      "webSite": "📺123云盘资源发布@zyfb123&📺123云盘资源频道@xx123pan&📺UC夸克百度迅雷资源分享@ucquark&📺夸克云盘综合资源@Quark_Movies&📺天翼云盘资源@tianyirigeng&📺网盘资源(电视剧)@alyp_TV&📺短剧网盘分享@jdjdn1111&📺肯德基@XiangxiuNB&📺鱼哥资源@yggpan&📺CH@ChangAn2504&📺云巢@peccxinpd",
+      "api": "https://raw.githubusercontent.com/YYDS678/uzVideo-extensions/main/vod/js/tgs.js",
+      "type": 101
+    },
+    {
+      "name": "🤠多多影音",
+      "version": 3,
+      "webSite": "https://tv.yydsys.top",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/duoduo.js",
+      "type": 101
+    },
+    {
+      "name": "🪵木偶哥哥",
+      "version": 2,
+      "webSite": "http://123.666291.xyz",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/mogg.js",
+      "type": 101
+    },
+    {
+      "name": "🧸玩偶哥哥",
+      "version": 1,
+      "webSite": "https://www.wogg.lol",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/wogg.js",
+      "type": 101
+    },
+    {
+      "name": "⚡️至臻网盘",
+      "version": 3,
+      "webSite": "http://www.miqk.cc",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/zhizhen.js",
+      "type": 101
+    },
+    {
+      "name": "🐲欧歌资源",
+      "version": 3,
+      "webSite": "https://woog.nxog.eu.org",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/ouge.js",
+      "type": 101
+    },
+    {
+      "name": "🐮二小网盘",
+      "version": 1,
+      "webSite": "https://www.2xiaopan.fun/",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/erxiao.js",
+      "type": 101
+    },
+    {
+      "name": "🌾小米优汐",
+      "version": 3,
+      "webSite": "https://xiaomiai.site/",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/xiaomi.js",
+      "type": 101
+    },
+    {
+      "name": "🖍蜡笔小新",
+      "version": 3,
+      "webSite": "https://feimao666.fun/",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/labipan.js",
+      "type": 101
+    },
+    {
+      "name": "🐯小小虎斑",
+      "version": 1,
+      "webSite": "http://103.45.162.207:20720",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/huban.js",
+      "type": 101
+    },
+    {
+        "name": "🍔奥秘影视",
+        "api": "http://xn--ihqu10cn4c.xn--v4q818bf34b.com/UZ/vod/js/zhizhen.js",
+        "webSite": "https://vip.omii.top/",
+        "version": "2",
+        "type": 100
+    },
+    {
+      "name": "🤖大玩 | 4K",
+      "api": "http://38.165.20.168/uzjs/dawan.js",
+      "webSite": "http://149.88.87.18:6688",
+      "version": 3,
+      "type": 101
+    },
+    {
+      "name": "⚡️闪电优汐",
+      "version": 1,
+      "webSite": "http://1.95.79.193/",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/shandian.js",
+      "type": 101
+    },
+    {
+      "name": "🐋雷鲸小站",
+      "version": 1,
+      "webSite": "https://www.leijing.xyz",
+      "api": "https://8704.kstore.space/Shimiandeye/uz/video/js/雷鲸小站.txt",
+      "type": 101
+    },
+    {
+      "name": "🍪趣盘夸克",
+      "version": 1,
+      "webSite": "https://pan.funletu.com",
+      "api": "https://8704.kstore.space/Shimiandeye/uz/video/js/趣盘搜索.txt",
+      "type": 101
+    },
+    {
+      "name": "🔍网盘搜索",
+      "version": 1,
+      "webSite": "https://www.pansearch.me/",
+      "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/resyunpan.js",
+      "type": 101
+    }
+     {
+      "name": "(直)NFI",
+      "version": 1,
+      "webSite": "https://www.netflixgc.com/",
+      "api": "https://raw.githubusercontent.com/chenzifeng0420/HelooWord/refs/heads/main/VOD/NFI.js",
+      "type": 101
+    }
+  ],
+  
+  "live": [
+    {
+      "name": "📺电视直播",
+      "api": "http://rihou.cc:567/gggg.nzk",
+      "type": 10,
+      "remark": "日后直播"
+    }
+  ]
+}
