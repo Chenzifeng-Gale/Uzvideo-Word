@@ -1,7 +1,7 @@
 // @name:[嗅] 爱短剧
 // @version:1
 // @webSite:https://www.aiduanju.cc
-// @remark:爱短剧完整功能（首页/电视剧/电影/短剧）
+// @remark:爱短剧完整功能（电视剧/电影/短剧）
 // @order: D
 
 var appConfig = {
@@ -24,11 +24,6 @@ var appConfig = {
   
   // 分类配置
   firstClass: [
-    {
-      name: '首页推荐',
-      id: 'recommend',
-      filter: []
-    },
     {
       name: '电视剧',
       id: '2',
@@ -137,18 +132,11 @@ async function getClassList(args) {
 async function getVideoList(args) {
   var backData = new RepVideoList();
   try {
-    var url = '';
     var page = args.page || 1;
-    
-    // 首页推荐特殊处理
-    if (args.url === 'recommend') {
-      url = appConfig.webSite;
-    } else {
-      url = appConfig.mainListUrl
-        .replace('@{webSite}', appConfig.webSite)
-        .replace('@{mainId}', args.url)
-        .replace('@{page}', page);
-    }
+    var url = appConfig.mainListUrl
+      .replace('@{webSite}', appConfig.webSite)
+      .replace('@{mainId}', args.url)
+      .replace('@{page}', page);
     
     // 获取数据
     var respData = await req(url, {
@@ -271,84 +259,35 @@ async function searchVideo(args) {
 function parseVideoList($) {
   var list = [];
   
-  // 首页特殊处理
-  if ($('body').hasClass('fed-index-body')) {
-    // 解析轮播图
-    var sliderItems = $('.fed-swip-item.fed-part-2by3');
-    for (var i = 0; i < sliderItems.length; i++) {
-      var element = sliderItems[i];
-      var $el = $(element);
-      var imageEl = $el.find('img');
-      var imageUrl = imageEl.attr('data-original') || imageEl.attr('src') || '';
-      var name = $el.find('.fed-list-title').text().trim();
-      var href = $el.attr('href') || '';
-      
-      if (name && href) {
-        list.push({
-          vod_pic: imageUrl,
-          vod_name: name,
-          vod_id: removeDomain(href)
-        });
-      }
-    }
+  var videoListLiTag = appConfig.videoListLiTag;
+  var selector = videoListLiTag.name + '.' + videoListLiTag.class.replace(/\s+/g, '.');
+  var videoItems = $(selector);
+  
+  for (var index = 0; index < videoItems.length; index++) {
+    var element = videoItems[index];
+    var $element = $(element);
     
-    // 解析分类区块
-    var sectionBlocks = $('.fed-tabs-boxs > .fed-tab-item');
-    for (var j = 0; j < sectionBlocks.length; j++) {
-      var section = sectionBlocks[j];
-      var $section = $(section);
-      var videoItems = $section.find('.fed-list-item');
-      
-      for (var k = 0; k < videoItems.length; k++) {
-        var item = videoItems[k];
-        var $item = $(item);
-        var imageEl = $item.find('img');
-        var imageUrl = imageEl.attr('data-original') || imageEl.attr('src') || '';
-        var name = $item.find('.fed-list-title').text().trim();
-        var href = $item.find('a').attr('href') || '';
-        
-        if (name && href) {
-          list.push({
-            vod_pic: imageUrl,
-            vod_name: name,
-            vod_id: removeDomain(href)
-          });
-        }
-      }
-    }
-  } 
-  // 其他页面处理
-  else {
-    var videoListLiTag = appConfig.videoListLiTag;
-    var selector = videoListLiTag.name + '.' + videoListLiTag.class.replace(/\s+/g, '.');
-    var videoItems = $(selector);
+    // 解析图片
+    var imageTag = appConfig.vImageTag;
+    var imageSelector = imageTag.name + '.' + imageTag.class.replace(/\s+/g, '.');
+    var imageElement = $element.find(imageSelector);
+    var imageUrl = parseImage(imageElement);
     
-    for (var index = 0; index < videoItems.length; index++) {
-      var element = videoItems[index];
-      var $element = $(element);
-      
-      // 解析图片
-      var imageTag = appConfig.vImageTag;
-      var imageSelector = imageTag.name + '.' + imageTag.class.replace(/\s+/g, '.');
-      var imageElement = $element.find(imageSelector);
-      var imageUrl = parseImage(imageElement);
-      
-      // 解析名称
-      var nameTag = appConfig.vNameTag;
-      var nameSelector = nameTag.name + '.' + nameTag.class.replace(/\s+/g, '.');
-      var nameElement = $element.find(nameSelector);
-      var name = nameElement.text().trim();
-      
-      // 解析详情页链接
-      var href = imageElement.attr('href') || nameElement.attr('href') || '';
-      
-      if (name && href) {
-        list.push({
-          vod_pic: imageUrl,
-          vod_name: name,
-          vod_id: removeDomain(href)
-        });
-      }
+    // 解析名称
+    var nameTag = appConfig.vNameTag;
+    var nameSelector = nameTag.name + '.' + nameTag.class.replace(/\s+/g, '.');
+    var nameElement = $element.find(nameSelector);
+    var name = nameElement.text().trim();
+    
+    // 解析详情页链接
+    var href = imageElement.attr('href') || nameElement.attr('href') || '';
+    
+    if (name && href) {
+      list.push({
+        vod_pic: imageUrl,
+        vod_name: name,
+        vod_id: removeDomain(href)
+      });
     }
   }
   
@@ -408,9 +347,11 @@ function parseImage(imageHtml) {
 // ================ 其他必要函数 ================ //
 
 async function getSubclassList(args) {
-  return JSON.stringify(new RepVideoSubclassList());
+  var backData = new RepVideoSubclassList();
+  return JSON.stringify(backData);
 }
 
 async function getSubclassVideoList(args) {
-  return JSON.stringify(new RepVideoList());
+  var backData = new RepVideoList();
+  return JSON.stringify(backData);
 }
