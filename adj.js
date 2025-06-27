@@ -1,5 +1,5 @@
 // @name:[嗅] 爱短剧
-// @version:1
+// @version:1.1
 // @webSite:https://www.aiduanju.cc
 // @remark:爱短剧完整功能（电视剧/电影/短剧）
 // @order: D
@@ -41,22 +41,22 @@ var appConfig = {
     }
   ],
   
-  // 分类视频列表元素
+  // 分类视频列表元素 - 更新为更简单的选择器
   videoListLiTag: {
     name: 'li',
-    class: 'fed-list-item fed-padding fed-col-xs4 fed-col-sm3 fed-col-md2'
+    class: 'fed-list-item'
   },
   
-  // 视频图片元素
+  // 视频图片元素 - 更新为更简单的选择器
   vImageTag: {
     name: 'a',
-    class: 'fed-list-pics fed-lazy fed-part-2by3'
+    class: 'fed-list-pics'
   },
   
-  // 视频名称元素
+  // 视频名称元素 - 更新为更简单的选择器
   vNameTag: {
     name: 'a',
-    class: 'fed-list-title fed-font-xiv fed-text-center fed-text-sm-left fed-visible fed-part-eone'
+    class: 'fed-list-title'
   },
   
   // 播放线路列表
@@ -68,7 +68,7 @@ var appConfig = {
   // 剧集元素
   episodeItemTag: {
     name: 'a',
-    class: 'fed-btns-info fed-rims-info fed-part-eone'
+    class: 'fed-btns-info'
   },
   
   // 搜索链接
@@ -77,7 +77,7 @@ var appConfig = {
   // 搜索结果列表元素
   searchListTag: {
     name: 'li',
-    class: 'fed-list-item fed-padding fed-col-xs4 fed-col-sm3 fed-col-md2'
+    class: 'fed-list-item'
   },
 
   get webSite() {
@@ -138,18 +138,24 @@ async function getVideoList(args) {
       .replace('@{mainId}', args.url)
       .replace('@{page}', page);
     
+    console.log('请求URL:', url); // 调试日志
+    
     // 获取数据
     var respData = await req(url, {
       headers: appConfig.headers
     });
+    
+    console.log('响应状态:', respData.status); // 调试日志
     
     var htmlStr = respData.data || '';
     var $ = cheerio.load(htmlStr);
     
     // 解析视频列表
     var videoList = parseVideoList($);
+    console.log('解析到视频数量:', videoList.length); // 调试日志
     backData.data = videoList;
   } catch (error) {
+    console.error('获取视频列表错误:', error); // 调试日志
     backData.error = error.toString();
   }
   return JSON.stringify(backData);
@@ -162,6 +168,8 @@ async function getVideoDetail(args) {
   var backData = new RepVideoDetail();
   try {
     var url = combineUrl(args.url);
+    console.log('详情页URL:', url); // 调试日志
+    
     var respData = await req(url, {
       headers: appConfig.headers
     });
@@ -170,15 +178,15 @@ async function getVideoDetail(args) {
     var $ = cheerio.load(htmlStr);
     
     // 解析播放列表
-    var playFromTag = appConfig.playFromTag;
-    var playFromSelector = playFromTag.name + '.' + playFromTag.class.replace(/\s+/g, '.');
+    var playFromSelector = appConfig.playFromTag.name + '.' + appConfig.playFromTag.class.replace(/\s+/g, '.');
     var playFromHtmlList = $(playFromSelector);
+    
+    console.log('找到播放线路:', playFromHtmlList.length); // 调试日志
     
     var playUrl = '';
     for (var i = 0; i < playFromHtmlList.length; i++) {
       var element = playFromHtmlList[i];
-      var episodeItemTag = appConfig.episodeItemTag;
-      var episodeSelector = episodeItemTag.name + '.' + episodeItemTag.class.replace(/\s+/g, '.');
+      var episodeSelector = appConfig.episodeItemTag.name + '.' + appConfig.episodeItemTag.class.replace(/\s+/g, '.');
       var episodes = $(element).find(episodeSelector);
       
       for (var j = 0; j < episodes.length; j++) {
@@ -199,6 +207,7 @@ async function getVideoDetail(args) {
       vod_play_url: playUrl
     };
   } catch (error) {
+    console.error('获取详情错误:', error); // 调试日志
     backData.error = error.toString();
   }
   return JSON.stringify(backData);
@@ -211,6 +220,7 @@ async function getVideoPlayUrl(args) {
   var backData = new RepVideoPlayUrl();
   try {
     var url = combineUrl(args.url);
+    console.log('播放地址URL:', url); // 调试日志
     backData.sniffer = {
       url: url,
       ua: appConfig.headers['User-Agent']
@@ -234,6 +244,8 @@ async function searchVideo(args) {
       .replace('@{searchWord}', args.searchWord)
       .replace('@{page}', args.page || 1);
     
+    console.log('搜索URL:', url); // 调试日志
+    
     // 获取搜索结果
     var respData = await req(url, {
       headers: appConfig.headers
@@ -244,6 +256,7 @@ async function searchVideo(args) {
     
     // 解析搜索结果
     var videoList = parseVideoList($);
+    console.log('搜索到视频数量:', videoList.length); // 调试日志
     backData.data = videoList;
   } catch (error) {
     backData.error = error.toString();
@@ -259,28 +272,28 @@ async function searchVideo(args) {
 function parseVideoList($) {
   var list = [];
   
-  var videoListLiTag = appConfig.videoListLiTag;
-  var selector = videoListLiTag.name + '.' + videoListLiTag.class.replace(/\s+/g, '.');
+  // 简化选择器，只匹配关键类名
+  var selector = appConfig.videoListLiTag.name + '.' + appConfig.videoListLiTag.class;
   var videoItems = $(selector);
+  
+  console.log('找到列表项:', videoItems.length); // 调试日志
   
   for (var index = 0; index < videoItems.length; index++) {
     var element = videoItems[index];
     var $element = $(element);
     
-    // 解析图片
-    var imageTag = appConfig.vImageTag;
-    var imageSelector = imageTag.name + '.' + imageTag.class.replace(/\s+/g, '.');
+    // 解析图片 - 使用更通用的选择器
+    var imageSelector = appConfig.vImageTag.name + '.' + appConfig.vImageTag.class;
     var imageElement = $element.find(imageSelector);
     var imageUrl = parseImage(imageElement);
     
-    // 解析名称
-    var nameTag = appConfig.vNameTag;
-    var nameSelector = nameTag.name + '.' + nameTag.class.replace(/\s+/g, '.');
+    // 解析名称 - 使用更通用的选择器
+    var nameSelector = appConfig.vNameTag.name + '.' + appConfig.vNameTag.class;
     var nameElement = $element.find(nameSelector);
     var name = nameElement.text().trim();
     
     // 解析详情页链接
-    var href = imageElement.attr('href') || nameElement.attr('href') || '';
+    var href = imageElement.attr('href') || nameElement.attr('href') || $element.find('a').attr('href') || '';
     
     if (name && href) {
       list.push({
@@ -298,6 +311,8 @@ function parseVideoList($) {
  * 组合完整URL
  */
 function combineUrl(url) {
+  if (!url) return '';
+  
   if (url.indexOf('http') === 0) {
     return url;
   } else if (url.startsWith('/')) {
@@ -325,20 +340,28 @@ function removeDomain(url) {
 function parseImage(imageHtml) {
   if (!imageHtml || imageHtml.length === 0) return '';
   
-  // 检查data-original属性
+  // 优先获取data-original（懒加载）
   var dataOriginal = imageHtml.attr('data-original');
-  if (dataOriginal && dataOriginal.indexOf('http') === 0) {
+  if (dataOriginal) {
+    if (dataOriginal.indexOf('http') !== 0 && dataOriginal.startsWith('//')) {
+      return 'https:' + dataOriginal;
+    }
     return dataOriginal;
   }
   
-  // 检查其他属性
-  var possibleAttrs = ['src', 'data-src'];
-  for (var i = 0; i < possibleAttrs.length; i++) {
-    var attr = possibleAttrs[i];
-    var value = imageHtml.attr(attr);
-    if (value && value.indexOf('http') === 0) {
-      return value;
+  // 其次获取src
+  var src = imageHtml.attr('src');
+  if (src) {
+    if (src.indexOf('http') !== 0 && src.startsWith('//')) {
+      return 'https:' + src;
     }
+    return src;
+  }
+  
+  // 尝试获取img标签
+  var img = imageHtml.find('img');
+  if (img.length > 0) {
+    return parseImage(img);
   }
   
   return '';
