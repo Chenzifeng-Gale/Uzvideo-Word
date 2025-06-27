@@ -121,15 +121,7 @@
       "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/resyunpan.js",
       "type": 101
     }
-     {
-      "name": "(直)NFI",
-      "version": 1,
-      "webSite": "https://www.netflixgc.com/",
-      "api": "https://raw.githubusercontent.com/chenzifeng0420/HelooWord/refs/heads/main/VOD/NFI.js",
-      "type": 101
-    }
   ],
-  
   "live": [
     {
       "name": "📺电视直播",
