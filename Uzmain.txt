@@ -23,13 +23,6 @@
       "api": "https://raw.githubusercontent.com/woleigedouer/uzVideo-extensions-beta/main/vod/js/duoduo.js",
       "type": 101
     },
-  {
-      "name": "ADJ",
-      "version": 3,
-      "webSite": "https://www.aiduanju.cc",
-      "api": "https://raw.githubusercontent.com/chenzifeng0420/Uzvideo-Word/refs/heads/main/adj.js",
-      "type": 101
-    },
     {
       "name": "🪵木偶哥哥",
       "version": 2,
