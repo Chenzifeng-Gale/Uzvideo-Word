@@ -80,20 +80,6 @@
       "type": 101
     },
     {
-        "name": "🍔奥秘影视",
-        "api": "http://xn--ihqu10cn4c.xn--v4q818bf34b.com/UZ/vod/js/zhizhen.js",
-        "webSite": "https://vip.omii.top/",
-        "version": "2",
-        "type": 100
-    },
-    {
-      "name": "🤖大玩 | 4K",
-      "api": "http://38.165.20.168/uzjs/dawan.js",
-      "webSite": "http://149.88.87.18:6688",
-      "version": 3,
-      "type": 101
-    },
-    {
       "name": "⚡️闪电优汐",
       "version": 1,
       "webSite": "http://1.95.79.193/",
